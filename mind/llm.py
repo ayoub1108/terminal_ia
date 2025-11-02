@@ -1,6 +1,8 @@
 import os
 import json
 
+from mind.prompts import PROMPT_TEMPLATE
+
 def call_openai_chat(prompt_messages, model="gpt-4o-mini", temperature=0.0):
     """Simple OpenAI chat wrapper."""
     import openai
@@ -41,3 +43,12 @@ def run_model(user_prompt, backend='openai', shell='bash', model_name=None):
         return call_local_llm(prompt)
     else:
         raise ValueError(f"Unsupported backend: {backend}")
+from gpt4all import GPT4All
+
+# Load your local model once
+model = GPT4All("ggml-gpt4all-j.bin")  # download model and put path here
+
+def run_model(user_prompt, shell="bash"):
+    prompt = PROMPT_TEMPLATE.format(shell=shell, user_prompt=user_prompt)
+    response = model.generate(prompt)
+    return response
