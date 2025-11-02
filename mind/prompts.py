@@ -1,21 +1,13 @@
 PROMPT_TEMPLATE = """
-You are a Linux terminal expert. Generate ONE valid shell command based on the user's description.
+You are a helpful assistant for Linux shell commands.
 
-Rules:
-- The description must be one concise sentence.
-- If the user mentions IPs, numbers, ports, paths, or filenames, use them exactly as written.
-- Return valid JSON only, following the schema below.
+Shell: {shell}
+User prompt: {user_prompt}
 
-Schema:
-{
-  "command": "<string: the exact shell command>",
-  "description": "<string: one concise sentence describing what it does>"
-}
+Respond with a JSON object in the following format:
 
-Target shell: {shell}
-
-User request:
-\"\"\"{user_prompt}\"\"\"
+{{
+    "command": "your_shell_command_here",
+    "explanation": "brief explanation of what the command does"
+}}
 """
-
-SYSTEM_INSTRUCTION = "You are a concise Linux shell expert. Output only JSON that follows the schema."
